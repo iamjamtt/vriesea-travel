@@ -42,12 +42,12 @@
     </div>
 
     <main>
-        <header data-add-bg="bg-dark-1" class="header bg-green js-header" data-x="header" data-x-toggle="is-menu-opened">
+        <header @yield('header') data-add-bg="bg-dark-1" class="header bg-green js-header" data-x="header" data-x-toggle="is-menu-opened">
             <div data-anim="fade" class="header__container px-30 sm:px-20">
                 <div class="row justify-between items-center">
                     <div class="col-auto">
                         <div class="d-flex items-center">
-                            <a href="index.html" class="header-logo mr-20" data-x="header-logo"
+                            <a href="{{ route('cliente.home') }}" class="header-logo mr-20" data-x="header-logo"
                                 data-x-toggle="is-logo-dark">
                                 <img src="{{ asset('assets_cliente/img/logo/logo_dark.png') }}" alt="logo icon">
                                 <img src="{{ asset('assets_cliente/img/logo/logo.png') }}" alt="logo icon">
@@ -133,7 +133,7 @@
                 </div>
             </div>
         </section>
-        
+
         <footer class="footer -type-1">
             <div class="container">
                 <div class="pt-60 pb-60">

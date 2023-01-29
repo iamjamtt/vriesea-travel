@@ -1,87 +1,7 @@
 @extends('vista_cliente')
 
 @section('content')
-{{-- <div class="breadcrumb">
-<div class="container">
-    <ul class="list-unstyled d-flex align-items-center m-0">
-        <li><a href="{{ route('cliente.home') }}">Inicio</a></li>
-        <li>
-            <svg class="icon icon-breadcrumb" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.4">
-                    <path d="M25.9375 8.5625L23.0625 11.4375L43.625 32L23.0625 52.5625L25.9375 55.4375L47.9375 33.4375L49.3125 32L47.9375 30.5625L25.9375 8.5625Z" fill="#000"></path>
-                </g>
-            </svg>
-        </li>
-        <li>{{ $tipo_producto->tipo }}</li>
-    </ul>
-</div>
-</div>
 
-<main id="MainContent" class="content-for-layout">
-<div class="collection mt-100">
-    <div class="container">
-        <div class="row">
-            <!-- product area start -->
-            <div class="col-lg-12 col-md-12 col-12">
-                <div class="filter-sort-wrapper d-flex justify-content-between flex-wrap">
-                    <div class="collection-title-wrap d-flex align-items-end">
-                        <h2 class="collection-title heading_24 fw-bold">Todos los {{ $tipo_producto->tipo }}</h2>
-                        <p class="collection-counter text_16 mb-0 ms-2">({{ $productos->count() }} items)</p>
-                    </div>
-                    <!-- -->
-                </div>
-                <div class="collection-product-container">
-                    <div class="row">
-                        @foreach ($productos as $item)
-                            <div class="col-lg-3 col-md-6 col-6 aos-init aos-animate" data-aos="fade-up" data-aos-duration="700">
-                                <div class="product-card">
-                                    <div class="product-card-img">
-                                        <a class="hover-switch" href="{{ route('cliente.detalle', ['slug' => $item->tipo_producto->tipo_slug, 'id' => $item->producto_id]) }}">
-                                            @php
-                                                $producto_imagen = App\Models\ProductoImagen::where('producto_id', $item->producto_id)->where('producto_imagen_estado', 1)->get();
-                                            @endphp
-                                            @if ($producto_imagen != null)
-                                                @if ($producto_imagen->count() > 1)
-                                                <img class="secondary-img" src="{{ asset($producto_imagen[1]->producto_imagen) }}" alt="product-img">
-                                                <img class="primary-img" src="{{ asset($producto_imagen[0]->producto_imagen) }}" alt="product-img">
-                                                @else
-                                                <img class="secondary-img" src="{{ asset('assets_cliente/img/not-found.jpeg') }}" alt="product-img">
-                                                <img class="primary-img" src="{{ asset('assets_cliente/img/not-found.jpeg') }}" alt="product-img">
-                                                @endif
-                                            @endif
-                                        </a>
-
-                                        <div class="product-badge">
-                                            <span class="badge-label badge-new rounded">Nuevo</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-card-details">
-                                        <h3 class="product-card-title">
-                                            <a href="{{ route('cliente.detalle', ['slug' => $item->tipo_producto->tipo_slug, 'id' => $item->producto_id]) }}">{{ $item->producto_titulo }}</a>
-                                        </h3>
-                                        <div class="product-card-price">
-                                            <span class="card-price-regular">S/. {{ $item->producto_precio }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                        @if ($productos->count() == 0)
-                            <div class="col-lg-12 col-md-12 col-12">
-                                <div class="alert alert-secondary mt-5" role="alert">
-                                    <h4 class="alert-heading mt-3 text-muted">No hay productos</h4>
-                                    <p>Por el momento no hay productos en esta categoria.</p>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <!-- product area end -->
-        </div>
-    </div>
-</div>
-</main> --}}
     <section class="section-bg layout-pt-lg layout-pb-lg">
         <div class="section-bg__item col-12">
             <img src="{{ asset($home_header->imagen) }}" alt="image">
@@ -178,7 +98,7 @@
                                             <div class="text-22 lh-12 fw-600 mt-5">S/. {{ $item->producto_precio }}</div>
                                             <div class="text-14 text-light-1 mt-5"></div>
 
-                                            <a href="#" class="button -md -dark-1 bg-blue-1 text-white mt-24">
+                                            <a href="{{ route('cliente.detalle', ['slug' => $item->tipo_producto->tipo_slug, 'id' => $item->producto_id]) }}" class="button -md -dark-1 bg-blue-1 text-white mt-24">
                                                 Ver detalle <div class="icon-arrow-top-right ml-15"></div>
                                             </a>
                                         </div>

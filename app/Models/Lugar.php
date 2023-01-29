@@ -29,4 +29,9 @@ class Lugar extends Model
     {
         return $this->belongsToMany(Producto::class, 'producto_lugar', 'lugar_id', 'producto_id');
     }
+
+    public function lugar_imagen()
+    {
+        return $this->hasMany(LugarImagen::class, 'lugar_id', 'lugar_id');
+    }
 }

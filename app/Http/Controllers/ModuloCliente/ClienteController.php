@@ -7,6 +7,7 @@ use App\Models\Empresa;
 use App\Models\HomeCuerpo;
 use App\Models\HomeHeader;
 use App\Models\HomeVideo;
+use App\Models\Lugar;
 use App\Models\Producto;
 use App\Models\TipoProducto;
 use Illuminate\Http\Request;
@@ -20,12 +21,16 @@ class ClienteController extends Controller
         $home_cuerpo = HomeCuerpo::where('estado', 1)->get();
         $home_video = HomeVideo::where('estado', 1)->first();
         $num = 1;
+        $producto = Producto::where('producto_estado', 1)->skip(0)->take(6)->get();
+        $lugares = Lugar::where('lugar_estado', 1)->skip(0)->take(8)->get();
 
         return view('modulo-cliente.home.index', [
             'home_header' => $home_header,
             'home_cuerpo' => $home_cuerpo,
             'home_video' => $home_video,
             'num' => $num,
+            'producto' => $producto,
+            'lugares' => $lugares,
         ]);
     }
 
@@ -77,7 +82,10 @@ class ClienteController extends Controller
     {
         $empresa = Empresa::where('empresa_estado', 1)->first();
 
+        $home_header = HomeHeader::where('estado', 1)->first();
+
         $tipo_producto = TipoProducto::where('tipo_slug', $slug)->first();
+
         if(!$tipo_producto){
             abort(404);
         }
@@ -86,19 +94,27 @@ class ClienteController extends Controller
 
         if($producto){
             $num = 0;
-            $producto_imagen = $producto->producto_imagen()->where('producto_imagen_estado', 1)->get();
             $producto_incluye = $producto->producto_incluye()->where('producto_incluye_estado', 1)->get();
-            $producto_lugares = $producto->producto_lugares()->where('producto_lugares_estado', 1)->get();
+            $producto_lugar = $producto->lugar()->where('lugar_estado', 1)->skip(0)->take(4)->get();
+            $lugar_imagen = $producto->lugar()->where('lugar_estado', 1)->skip(5)->take(1)->first();
+            if($lugar_imagen == null){
+                $lugar_imagen = $producto->lugar()->where('lugar_estado', 1)->skip(0)->take(1)->first()->lugar_imagen()->first();
+            }else{
+                $lugar_imagen = $lugar_imagen->lugar_imagen()->first();
+            }
+            $producto_lugares = $producto->lugar()->where('lugar_estado', 1)->get();
 
             return view('modulo-cliente.detalle.index', [
                 'producto' => $producto,
                 'tipo_producto' => $tipo_producto,
                 'producto_id' => $id,
-                'producto_imagen' => $producto_imagen,
                 'producto_incluye' => $producto_incluye,
-                'producto_lugares' => $producto_lugares,
                 'empresa' => $empresa,
                 'num' => $num,
+                'home_header' => $home_header,
+                'producto_lugar' => $producto_lugar,
+                'lugar_imagen' => $lugar_imagen,
+                'producto_lugares' => $producto_lugares,
             ]);
         }else{
             abort(404);
